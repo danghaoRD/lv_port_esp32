@@ -108,11 +108,16 @@ void lvgl_driver_init(void)
 #if defined CONFIG_LV_TFT_DISPLAY_PROTOCOL_SPI
     ESP_LOGI(TAG, "Initializing SPI master for display");
     
-    lvgl_spi_driver_init(TFT_SPI_HOST,
+    // lvgl_spi_driver_init(TFT_SPI_HOST,
+    //     DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
+    //     SPI_BUS_MAX_TRANSFER_SZ, 1,
+    //     DISP_SPI_IO2, DISP_SPI_IO3);
+    
+        lvgl_spi_driver_init(TFT_SPI_HOST,
         DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
         SPI_BUS_MAX_TRANSFER_SZ, 1,
         DISP_SPI_IO2, DISP_SPI_IO3);
-    
+
     disp_spi_add_device(TFT_SPI_HOST);
     
     disp_driver_init();
@@ -214,6 +219,11 @@ bool lvgl_spi_driver_init(int host,
     const char *spi_names[] = {
         "SPI_HOST", "", ""
     };
+#elif defined (CONFIG_IDF_TARGET_ESP32C3)
+    assert((SPI1_HOST <= host) && (SPI2_HOST >= host));
+    const char *spi_names[] = {
+        "SPI1_HOST", "SPI2_HOST", ""
+    };
 #endif
 
     ESP_LOGI(TAG, "Configuring SPI host %s (%d)", spi_names[host], host);
@@ -232,7 +242,7 @@ bool lvgl_spi_driver_init(int host,
     };
 
     ESP_LOGI(TAG, "Initializing SPI bus...");
-    esp_err_t ret = spi_bus_initialize(host, &buscfg, dma_channel);
+    esp_err_t ret = spi_bus_initialize(host, &buscfg, SPI_DMA_CH_AUTO);
     assert(ret == ESP_OK);
 
     return ESP_OK != ret;

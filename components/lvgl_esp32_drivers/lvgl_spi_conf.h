@@ -72,6 +72,7 @@ extern "C" {
 #define TFT_SPI_HOST FSPI_HOST
 #endif
 
+#define TFT_SPI_HOST  SPI2_HOST
 #if defined (CONFIG_LV_TFT_DISPLAY_SPI_HALF_DUPLEX)
 #define DISP_SPI_HALF_DUPLEX
 #else
@@ -135,7 +136,7 @@ extern "C" {
 #define SPI_BUS_MAX_TRANSFER_SZ (DISP_BUF_SIZE * 2)
 
 #else
-#define SPI_BUS_MAX_TRANSFER_SZ (DISP_BUF_SIZE * 2)
+#define SPI_BUS_MAX_TRANSFER_SZ (DISP_BUF_SIZE * 4)
 #endif
 
 #if defined (CONFIG_LV_TFT_USE_CUSTOM_SPI_CLK_DIVIDER)
