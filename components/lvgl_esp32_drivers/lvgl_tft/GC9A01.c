@@ -52,7 +52,7 @@ static void GC9A01_send_color(void * data, uint16_t length);
 
 void GC9A01_init(void)
 {
-	#if(0)
+	#if(1)
 	lcd_init_cmd_t GC_init_cmds[]={
 ////////////////////////////////////////////
 		{0xEF, {0}, 0},

@@ -106,17 +106,17 @@ void lvgl_driver_init(void)
 
 /* Display controller initialization */
 #if defined CONFIG_LV_TFT_DISPLAY_PROTOCOL_SPI
-    ESP_LOGI(TAG, "Initializing SPI master for display");
+    ESP_LOGI(TAG, "Initializing SPI master for display transfer size: %d",SPI_BUS_MAX_TRANSFER_SZ);
     
-    // lvgl_spi_driver_init(TFT_SPI_HOST,
-    //     DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
-    //     SPI_BUS_MAX_TRANSFER_SZ, 1,
-    //     DISP_SPI_IO2, DISP_SPI_IO3);
-    
-        lvgl_spi_driver_init(TFT_SPI_HOST,
+    lvgl_spi_driver_init(TFT_SPI_HOST,
         DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
         SPI_BUS_MAX_TRANSFER_SZ, 1,
         DISP_SPI_IO2, DISP_SPI_IO3);
+    
+        // lvgl_spi_driver_init(TFT_SPI_HOST,
+        // DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
+        // 20000, 1,
+        // DISP_SPI_IO2, DISP_SPI_IO3);
 
     disp_spi_add_device(TFT_SPI_HOST);
     
